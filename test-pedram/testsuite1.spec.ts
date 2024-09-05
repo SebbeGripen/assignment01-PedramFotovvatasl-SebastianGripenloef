@@ -9,6 +9,17 @@ test.describe('Test suite 01', () => {
     const dashboardPage = new DashboardPage(page);
 
     await loginPage.goto();
+    await expect(loginPage.usernameTextfield).toBeVisible();
+    await expect(loginPage.usernameTextfield).toBeEditable();
+    await expect(loginPage.usernameTextfield).toBeEmpty();
+    
+    await expect(loginPage.passwordTextfield).toBeVisible();
+    await expect(loginPage.passwordTextfield).toBeEditable();
+    await expect(loginPage.passwordTextfield).toBeEmpty();
+
+    await expect(loginPage.loginButton).toBeVisible();
+    await expect(loginPage.loginButton).toBeEnabled();
+
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
     await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
     await dashboardPage.performLogout();
