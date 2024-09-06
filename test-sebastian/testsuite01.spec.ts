@@ -3,6 +3,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
 import { ClientsPage } from './pages/clients-page';
+import { faker } from '@faker-js/faker';
 import exp from 'constants';
 
 test.describe('Test suite 01', () => {
@@ -52,6 +53,7 @@ test.describe('Test suite 01', () => {
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
     await dashboardPage.inClients();
     await clientsPage.perfromCreateClient();
+    await expect (clientsPage.nameTextField).toContainText(clientsPage.fullName);
     await clientsPage.saveClient();
     await dashboardPage.outClients();
 
