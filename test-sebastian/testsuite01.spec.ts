@@ -48,6 +48,13 @@ test.describe('Test suite 01', () => {
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
 
+    await loginPage.goto();
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await dashboardPage.inClients();
+    await clientsPage.perfromCreateClient();
+    await clientsPage.saveClient();
+    await dashboardPage.outClients();
+
 
   });
 });
