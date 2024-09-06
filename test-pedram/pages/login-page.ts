@@ -8,7 +8,7 @@ export class LoginPage {
   readonly passwordTextfield: Locator;
   readonly loginButton: Locator;
 
-  //Const
+  //Constructor
   constructor(page: Page) {
     this.page = page;
     this.usernameTextfield = page.locator('input[type="text"]');
@@ -22,7 +22,7 @@ export class LoginPage {
   }
 
   async performLogin(username: string, password:string) {
-    //fill out the form - 2 textfields and click the submit button
+    //Method for filling out textfields and then click the submit button
     await this.usernameTextfield.fill(username);
     await this.passwordTextfield.fill(password);
     await this.loginButton.click();    

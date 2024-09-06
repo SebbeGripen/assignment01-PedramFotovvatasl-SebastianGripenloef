@@ -2,9 +2,10 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
+import { RoomsPage } from './pages/rooms-page';
 
 test.describe('Test suite 01', () => {
-  test('Test case 01', async ({ page }) => {
+  test('Test case 01 - Test login function,text fields and logout', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
 
@@ -26,4 +27,26 @@ test.describe('Test suite 01', () => {
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);   
   });   
+
+  test('Test case 2 - create a room and save it', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const roomsPage = new RoomsPage(page);
+
+    await loginPage.goto();
+
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+
+    await roomsPage.createRoom();
+    await expect(roomsPage.categorySelector).toBeVisible();
+    await expect(roomsPage.numberTextField).toBeVisible();
+    await expect(roomsPage.floorTextField).toBeVisible();
+    await expect(roomsPage.availableCheckbox).toBeVisible();
+    await expect(roomsPage.priceTextField).toBeVisible();
+
+    await roomsPage.saveRoom();
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();
+    await page.waitForTimeout(5000);   
+  });   
+  
+
 });
