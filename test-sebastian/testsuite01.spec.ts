@@ -14,6 +14,14 @@ test.describe('Test suite 01', () => {
     await expect(dashboardPage.logoutButton).toBeEnabled();
     await expect(dashboardPage.logoutButton).toHaveText('Logout');
     await expect(dashboardPage.logoutButton).toBeVisible();
+    await dashboardPage.inRooms();
+    await dashboardPage.outRooms();
+    await dashboardPage.inClients();
+    await dashboardPage.outClients();
+    await dashboardPage.inBills();
+    await dashboardPage.outBills();
+    await dashboardPage.inReservations();
+    await dashboardPage.outReservations();
     await dashboardPage.performLogout();
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);   
