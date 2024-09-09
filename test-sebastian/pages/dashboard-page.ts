@@ -12,8 +12,8 @@ export class DashboardPage {
   readonly clientsBackButton: Locator;
   readonly billsButton: Locator;
   readonly billsBackButton: Locator;
-  readonly reservationsButton : Locator;
-  readonly reservationsBackButton : Locator;
+  readonly reservationsButton: Locator;
+  readonly reservationsBackButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -28,32 +28,32 @@ export class DashboardPage {
     this.reservationsBackButton = page.locator('a.btn:nth-child(1)');
   }
 
-   async performLogout() {
+  async performLogout() {
     await this.logoutButton.click();
-   }
+  }
 
-   async inRooms() {
+  async inRooms() {
     await this.roomsButton.click();
-   }
-   async outRooms(){
+  }
+  async outRooms() {
     await this.roomsBackButton.click();
-   }
-   async inClients() {
+  }
+  async inClients() {
     await this.clientsButton.click();
-   }
-   async outClients(){
+  }
+  async outClients() {
     await this.clientsBackButton.click();
-   }
-   async inBills() {
+  }
+  async inBills() {
     await this.billsButton.click();
-   }
-   async outBills() {
+  }
+  async outBills() {
     await this.billsBackButton.click();
-   }
-    async inReservations() {
-      await this.reservationsButton.click();
-    }
-    async outReservations() {
-      await this.reservationsBackButton.click();
-    }
+  }
+  async inReservations() {
+    await this.reservationsButton.click();
+  }
+  async outReservations() {
+    await this.reservationsBackButton.click();
+  }
 }

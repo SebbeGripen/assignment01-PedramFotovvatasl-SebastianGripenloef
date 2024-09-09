@@ -1,9 +1,9 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 
-const fullName = faker.person.fullName();      
-const email = faker.internet.email();     
-const phoneNumber = faker.phone.number(); 
+const fullName = faker.person.fullName();
+const email = faker.internet.email();
+const phoneNumber = faker.phone.number();
 
 export class ClientsPage {
   //Attributes
@@ -23,14 +23,14 @@ export class ClientsPage {
     this.saveButton = page.locator('a.btn:nth-child(2)');
   }
 
-   async perfromCreateClient() {
+  async perfromCreateClient() {
     await this.createClientButton.click();
     await this.nameTextField.fill(fullName);
     await this.emailTextField.fill(email);
     await this.phoneNumber.fill(phoneNumber);
-   }
-   async saveClient(){
+  }
+  async saveClient() {
     await this.saveButton.click();
-   }
+  }
 
 }
