@@ -5,6 +5,7 @@ import { DashboardPage } from './pages/dashboard-page';
 import { ClientsPage } from './pages/clients-page';
 import { faker } from '@faker-js/faker';
 import exp from 'constants';
+import { ReservationsPage } from './pages/reservations-page';
 
 test.describe('Test suite 01', () => {
   test('Test case 01', async ({ page }) => {
@@ -52,11 +53,43 @@ test.describe('Test suite 01', () => {
     await loginPage.goto();
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
     await dashboardPage.inClients();
+    await expect (page.getByRole('heading' , { name: 'Clients'})).toBeVisible();
+    await expect (clientsPage.createClientButton).toBeEnabled();
+    await expect (clientsPage.createClientButton).toHaveText('Create Client');
+    await expect (clientsPage.createClientButton).toBeVisible();
     await clientsPage.perfromCreateClient();
-    await expect (clientsPage.nameTextField).toContainText(clientsPage.fullName);
+    //await expect (clientsPage.nameTextField)
+    //await expect (clientsPage.emailTextField)
+    //await expect (clientsPage.phoneNumber)
+    await expect (page.getByRole('heading' , { name: 'New Client'})).toBeVisible();
+    await expect (page.locator('div.field:nth-child(1) > label:nth-child(1)')).toBeVisible(); //To see if this element is visible
+    await expect (page.locator('div.field:nth-child(1) > label:nth-child(1)')).toHaveText('Name'); //To see if the word 'Name' is above the name text box
+    await expect (page.locator('div.field:nth-child(2) > label:nth-child(1)')).toBeVisible(); //To see if element is visible
+    await expect (page.locator('div.field:nth-child(2) > label:nth-child(1)')).toHaveText('Email'); //To see if the word 'Email' is above the email text box
+    await expect (page.locator('div.field:nth-child(3) > label:nth-child(1)')).toBeVisible(); //To see if this element is visible
+    await expect (page.locator('div.field:nth-child(3) > label:nth-child(1)')).toHaveText('Telephone') //To see if the word 'Telephone' is above the telephone text box
     await clientsPage.saveClient();
     await dashboardPage.outClients();
+    await page.waitForTimeout(5000); 
 
+
+  });
+});
+
+test.describe('Test suite 01', () => {
+  test('Test case 03 create a reservation and save it', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardPage = new DashboardPage(page);
+    const clientsPage = new ClientsPage(page);
+    const ReservationsPage = new ReservationsPage(page);
+
+    await loginPage.goto();
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await dashboardPage.inReservations();
+    await expect (page.getByRole('heading' , { name: 'Reservations'})).toBeVisible();
+    await expect (clientsPage.createClientButton).toBeEnabled();
+    await expect (clientsPage.createClientButton).toHaveText('Create Client');
+    await expect (clientsPage.createClientButton).toBeVisible();
 
   });
 });

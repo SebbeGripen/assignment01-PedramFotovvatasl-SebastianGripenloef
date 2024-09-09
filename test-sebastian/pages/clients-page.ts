@@ -14,7 +14,6 @@ export class ClientsPage {
   readonly phoneNumber: Locator;
   readonly saveButton: Locator;
 
-
   constructor(page: Page) {
     this.page = page;
     this.createClientButton = page.locator('a.btn:nth-child(2)');
