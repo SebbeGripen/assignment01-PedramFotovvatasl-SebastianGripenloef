@@ -1,6 +1,14 @@
 //login-page.ts
 import { expect, type Locator, type Page } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
+//faker data
+const randomRoomNumber = faker.finance.amount({min:1, max:200, dec:0})
+const randomFloorNumber = faker.finance.amount({min:1, max:10, dec:0})
+const randomPriceAmount = faker.commerce.price({ min: 100, max: 2000, dec:0 })
+const randomRoomNumber2 = faker.finance.amount({min:1, max:200, dec:0})
+const randomFloorNumber2 = faker.finance.amount({min:1, max:10, dec:0})
+const randomPriceAmount2 = faker.commerce.price({ min: 100, max: 2000, dec:0 })
 export class RoomsPage {
   //Attributes
   readonly page: Page;
@@ -31,25 +39,26 @@ export class RoomsPage {
   }
 
   // Methods / functions
-  async createRoom1 () {
+  async createValidRoom () {
     await this.roomsButton.click();
     await this.createRoomButton.click();
     await this.categorySelector.selectOption({index:1});
-    await this.numberTextField.fill("35");
-    await this.floorTextField.fill("10");
+    await this.numberTextField.fill(randomRoomNumber);
+    await this.floorTextField.fill(randomFloorNumber);
     await this.availableCheckbox.click();
-    await this.priceTextField.fill("499");
+    await this.priceTextField.fill(randomPriceAmount);
     await this.featureSelect.selectOption({index:2})
 
   }
 
-  async createRoom2 () {
+  async createInvalidRoom () {
+    await this.roomsButton.click();
     await this.createRoomButton.click();
     await this.categorySelector.selectOption({index:2});
-    await this.numberTextField.fill("45");
-    await this.floorTextField.fill("7");
-    await this.availableCheckbox.click();
-    await this.priceTextField.fill("1500");
+    await this.numberTextField.fill(randomRoomNumber2);
+    await this.floorTextField.fill(randomFloorNumber2);
+    //await this.availableCheckbox.click();
+    await this.priceTextField.fill(randomPriceAmount2);
     await this.featureSelect.selectOption({index:3})
 
   }

@@ -1,5 +1,10 @@
 //login-page.ts
 import { expect, type Locator, type Page } from '@playwright/test';
+import { faker } from '@faker-js/faker';
+
+//faker data
+const randomValueAmount = faker.finance.amount({min:1, max:2000, dec:0})
+const randomValueAmount2 = faker.finance.amount({min:1, max:2000, dec:0})
 
 export class BillsPage {
   //Attributes
@@ -21,11 +26,18 @@ export class BillsPage {
   }
 
   // Methods / functions
-  async createBill() {
+  async createPaidBill() {
     await this.billsButton.click();
     await this.createBillButton.click();
-    await this.valueTextField.fill("10000");
+    await this.valueTextField.fill(randomValueAmount);
     await this.paidCheckbox.click();
+
+  }
+
+  async createUnpaidBill() {
+    await this.billsButton.click();
+    await this.createBillButton.click();
+    await this.valueTextField.fill(randomValueAmount2);
 
   }
 
