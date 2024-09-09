@@ -5,11 +5,6 @@ import { DashboardPage } from './pages/dashboard-page';
 import { RoomsPage } from './pages/rooms-page';
 import { BillsPage } from './pages/bills-page';
 
-//test teardown
-test.beforeEach(async ({ page }) => {
-  // Navigate to the initial page before each test if needed
-  await page.goto("http://localhost:3000"); // Replace with your initial URL
-});
 
 test.describe('Test suite 01', () => {
   test('Test case 1 - Test login function,text fields and logout', async ({ page }) => {
