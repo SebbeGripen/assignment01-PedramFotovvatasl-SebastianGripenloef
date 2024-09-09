@@ -81,7 +81,6 @@ test.describe('Test suite 02', () => {
   test('Test case 08 create a reservation and save it', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
-    const clientsPage = new ClientsPage(page);
     const reservationsPage = new ReservationsPage(page);
 
     await loginPage.goto();
@@ -94,6 +93,44 @@ test.describe('Test suite 02', () => {
     await reservationsPage.perfomCreateReservation();
     await reservationsPage.perfromSaveReservation();
     // make a test that checks that the reservation was saved.
+    await page.waitForTimeout(5000);
+
+
+  });
+});
+
+test.describe('Test suite 02', () => {
+  test('Test case 09 remove a client', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardPage = new DashboardPage(page);
+    const clientsPage = new ClientsPage(page);
+
+    await loginPage.goto();
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+    await dashboardPage.inClients();
+    await clientsPage.deleteClient();
+    await clientsPage.deleteClient();
+    await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no clients')
+    await page.waitForTimeout(5000);
+
+
+  });
+});
+
+test.describe('Test suite 02', () => {
+  test('Test case 10 remove a reservation', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardPage = new DashboardPage(page);
+    const reservationsPage = new ReservationsPage(page);
+
+    await loginPage.goto();
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+    await dashboardPage.inReservations();
+    await reservationsPage.deleteReservation();
+    await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no reservations');
+    await page.waitForTimeout(5000);
+
+
 
   });
 });

@@ -13,6 +13,8 @@ export class ClientsPage {
   readonly emailTextField: Locator;
   readonly phoneNumber: Locator;
   readonly saveButton: Locator;
+  readonly contextMenu: Locator;
+  readonly deleteButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -21,6 +23,8 @@ export class ClientsPage {
     this.emailTextField = page.locator('div.field:nth-child(2) > input:nth-child(2)');
     this.phoneNumber = page.locator('div.field:nth-child(3) > input:nth-child(2)');
     this.saveButton = page.locator('a.btn:nth-child(2)');
+    this.contextMenu = page.locator('div.card:nth-child(1) > div:nth-child(3) > img:nth-child(1)');
+    this.deleteButton = page.locator('.menu > a:nth-child(2)');
   }
 
   async perfromCreateClient() {
@@ -32,5 +36,12 @@ export class ClientsPage {
   async saveClient() {
     await this.saveButton.click();
   }
+
+  async deleteClient() {
+    await this.contextMenu.click();
+    await this.deleteButton.click();
+  }
+
+
 
 }
