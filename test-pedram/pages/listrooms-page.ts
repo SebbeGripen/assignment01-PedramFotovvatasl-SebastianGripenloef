@@ -1,4 +1,4 @@
-//login-page.ts
+
 import { expect, type Locator, type Page } from '@playwright/test';
 
 //faker data
@@ -9,7 +9,6 @@ export class ListRoomsPage {
   readonly roomsButton: Locator;
   readonly createRoomButton: Locator;
   readonly roomsBackButton: Locator;
-  //testing below
   readonly contextMenuButton: Locator;
   readonly contextDeleteButton: Locator;
   readonly contextEditButton: Locator;

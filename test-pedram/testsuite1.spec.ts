@@ -6,6 +6,7 @@ import { RoomsPage } from './pages/rooms-page';
 import { BillsPage } from './pages/bills-page';
 import { ListRoomsPage } from './pages/listrooms-page';
 import { CreateRoomPage } from './pages/createroom-page';
+import { EditRoomPage } from './pages/editroom-page';
 
 
 test.describe('Test suite 01', () => {
@@ -60,43 +61,30 @@ test.describe('Test suite 01', () => {
 
   test('Test case 3 - Test editing an existing room', async ({ page }) => {
     const loginPage = new LoginPage(page);
+    const listRoomsPage = new ListRoomsPage(page);
+    const editRoomPage = new EditRoomPage(page);
     
-
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    
-    //expect 'new room' header to be visible
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
-  
-
-  
-    //Rooms header visible
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();
+    await listRoomsPage.listRooms();
+    await editRoomPage.editRoom();
+    await editRoomPage.saveEditRoom();
 
   });
 
-  test('Test case 4 - Create a valid bill', async ({ page }) => {
+  test('Test case 4 - Test deleting an existing room', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    const billsPage = new BillsPage(page);
-
+    const listRoomsPage = new ListRoomsPage(page);
+    const editRoomPage = new EditRoomPage(page);
+    
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    await billsPage.createPaidBill();
-    //New Bills header
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
-
-    await expect(billsPage.createBillButton).toBeVisible();
-    await expect(billsPage.valueTextField).toBeVisible();
-    await expect(billsPage.paidCheckbox).toBeVisible();
-    await expect(billsPage.saveBillButton).toBeVisible();
-
-    await billsPage.saveBill();
-    //Bills header
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
+    await listRoomsPage.listRooms();
+    await editRoomPage.deleteRoom();
 
   });
 

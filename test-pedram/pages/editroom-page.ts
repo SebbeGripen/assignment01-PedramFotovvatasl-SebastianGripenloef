@@ -23,6 +23,7 @@ export class EditRoomPage {
     readonly editPageDeleteButton: Locator;
     readonly contextEditButton: Locator;
     readonly editSaveButton: Locator;
+    readonly contextDeleteButton: Locator;
 
 
     //Constructor
@@ -39,11 +40,11 @@ export class EditRoomPage {
         this.editPageDeleteButton = page.locator(".red");
         this.contextEditButton = page.locator(".menu > a:nth-child(1)");
         this.editSaveButton = page.locator(".blue");
+        this.contextDeleteButton = page.locator(".menu > a:nth-child(2)");
     }
 
     // Methods / functions
     async editRoom() {
-        await this.roomsButton.click();
         await this.contextMenuButton.click();
         await this.contextEditButton.click();
         await this.editCategoryField.selectOption({ index: 2 });
@@ -55,19 +56,19 @@ export class EditRoomPage {
 
     }
 
-    async saveRoom() {
+    async saveEditRoom() {
         await this.editSaveButton.click();
 
     }
 
     async deleteRoom() {
-        await this.roomsButton.click();
         await this.contextMenuButton.click();
-        await this.contextEditButton.click();
-        await this.editPageDeleteButton.click();
+        await this.contextDeleteButton.click();
 
 
 
     }
 
 }
+
+
