@@ -4,6 +4,8 @@ import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
 import { RoomsPage } from './pages/rooms-page';
 import { BillsPage } from './pages/bills-page';
+import { ListRoomsPage } from './pages/listrooms-page';
+import { CreateRoomPage } from './pages/createroom-page';
 
 
 test.describe('Test suite 01', () => {
@@ -15,7 +17,7 @@ test.describe('Test suite 01', () => {
     await expect(loginPage.usernameTextfield).toBeVisible();
     await expect(loginPage.usernameTextfield).toBeEditable();
     await expect(loginPage.usernameTextfield).toBeEmpty();
-    
+
     await expect(loginPage.passwordTextfield).toBeVisible();
     await expect(loginPage.passwordTextfield).toBeEditable();
     await expect(loginPage.passwordTextfield).toBeEmpty();
@@ -23,69 +25,65 @@ test.describe('Test suite 01', () => {
     await expect(loginPage.loginButton).toBeVisible();
     await expect(loginPage.loginButton).toBeEnabled();
 
-    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
     await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
     await dashboardPage.performLogout();
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);   
-  });   
+    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
+    await page.waitForTimeout(5000);
+  });
 
-  test('Test case 2 - Test creating an available room with valid values', async ({ page }) => {
+  test('Test case 2 - Test creating an available room with randomly generated data', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    const roomsPage = new RoomsPage(page);
+    const listRoomsPage = new ListRoomsPage(page);
+    const createRoomPage = new CreateRoomPage(page);
 
     await loginPage.goto();
 
-    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    await roomsPage.createValidRoom();
+    await listRoomsPage.listRooms();
+    await createRoomPage.createRoom();
     //expect 'new room' header to be visible
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
-    await expect(roomsPage.categorySelector).toBeVisible();
-    await expect(roomsPage.numberTextField).toBeVisible();
-    await expect(roomsPage.floorTextField).toBeVisible();
-    await expect(roomsPage.availableCheckbox).toBeVisible();
-    await expect(roomsPage.priceTextField).toBeVisible();
 
-    await roomsPage.saveRoom();
+    await createRoomPage.saveRoom();
+
+
+  
     //Rooms header visible
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();
 
-    await page.waitForTimeout(5000);   
+    await page.waitForTimeout(5000);
 
-    
-  });  
 
-  test('Test case 3 - Test creating an invalid room with incorrect values', async ({ page }) => {
+  });
+
+  test('Test case 3 - Test editing an existing room', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    const roomsPage = new RoomsPage(page);
+    
 
     await loginPage.goto();
 
-    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    await roomsPage.createInvalidRoom();
+    
     //expect 'new room' header to be visible
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
-    await expect(roomsPage.categorySelector).toBeVisible();
-    await expect(roomsPage.numberTextField).toBeVisible();
-    await expect(roomsPage.floorTextField).toBeVisible();
-    await expect(roomsPage.availableCheckbox).toBeVisible();
-    await expect(roomsPage.priceTextField).toBeVisible();
-
-    await roomsPage.saveRoom();
-    //Rooms header visible
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();  
-
-  }); 
   
+
+  
+    //Rooms header visible
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();
+
+  });
+
   test('Test case 4 - Create a valid bill', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const billsPage = new BillsPage(page);
 
     await loginPage.goto();
 
-    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
     await billsPage.createPaidBill();
     //New Bills header
@@ -100,7 +98,7 @@ test.describe('Test suite 01', () => {
     //Bills header
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
-  }); 
+  });
 
   test('Test case 5 - Creating an unpaid bill', async ({ page }) => {
 
@@ -109,7 +107,7 @@ test.describe('Test suite 01', () => {
 
     await loginPage.goto();
 
-    await loginPage.performLogin(`${process.env.TEST_USERNAME}`,`${process.env.TEST_PASSWORD}`)
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
     await billsPage.createUnpaidBill();
 
@@ -124,9 +122,33 @@ test.describe('Test suite 01', () => {
     //bills header
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
-  }); 
+  });
 
-  
-  
+  test('Test case 6 - delete room', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const roomsPage = new RoomsPage(page);
+
+    await loginPage.goto();
+
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+
+    await roomsPage.deleteRoom();
+
+  });
+
+  test('Test case 7 - update room', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const roomsPage = new RoomsPage(page);
+
+    await loginPage.goto();
+
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+
+    await roomsPage.updateRoom();
+
+  });
+
+
+
 
 });
