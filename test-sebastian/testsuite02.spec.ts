@@ -10,6 +10,7 @@ import { BillsPage } from './pages/bills-page';
 import { CreateClientsPage } from './pages/createclients-page';
 import { CreateReservationsPage } from './pages/createreservations-page.ts';
 import { EditClientsPage } from './pages/editclients-page.ts';
+import { EditReservationsPage } from './pages/editreservations-page.ts';
 
 
 
@@ -155,7 +156,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 12 edit a client', async ({ page }) => {
+  test('Test case 11 edit a client', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
@@ -168,6 +169,27 @@ test.describe('Test suite 02', () => {
     await editClientsPage.perfromFillClient();
     await editClientsPage.saveEditClient();
     await page.waitForTimeout(5000);
+    // test if it's false
+
+
+
+  });
+});
+
+test.describe('Test suite 02', () => {
+  test('Test case 12 edit a reservation', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardPage = new DashboardPage(page);
+    const reservationsPage = new ReservationsPage(page);
+    const editReservationsPage = new EditReservationsPage(page);
+    await loginPage.goto();
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+    await dashboardPage.inReservations();
+    await reservationsPage.editReservation();
+    await editReservationsPage.perfomFillReservation();
+    await editReservationsPage.perfromSaveReservation();
+    await page.waitForTimeout(5000);
+    // test that the new client is here.
 
 
 

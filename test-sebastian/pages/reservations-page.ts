@@ -6,6 +6,7 @@ export class ReservationsPage {
     readonly contextMenu: Locator;
     readonly deleteButton: Locator;
     readonly reservationsBackButton: Locator;
+    readonly editButton: Locator;
 
 
 
@@ -15,6 +16,7 @@ export class ReservationsPage {
         this.contextMenu = page.locator('.action > img:nth-child(1)');
         this.deleteButton = page.locator('.menu > a:nth-child(2)');
         this.reservationsBackButton = page.locator('a.btn:nth-child(1)');
+        this.editButton = page.locator('.menu > a:nth-child(1)');
 
     }
 
@@ -25,6 +27,11 @@ export class ReservationsPage {
     async deleteReservation() {
         await this.contextMenu.click();
         await this.deleteButton.click();
+    }
+
+    async editReservation() {
+        await this.contextMenu.click();
+        await this.editButton.click();
     }
 
     async outReservations() {
