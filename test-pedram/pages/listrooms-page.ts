@@ -1,8 +1,6 @@
 
 import { expect, type Locator, type Page } from '@playwright/test';
 
-//faker data
-
 export class ListRoomsPage {
   //Attributes
   readonly page: Page;
@@ -32,8 +30,6 @@ export class ListRoomsPage {
   async listRooms() {
     await this.roomsButton.click();
     
-
-
   }
 
 

@@ -7,6 +7,9 @@ import { BillsPage } from './pages/bills-page';
 import { ListRoomsPage } from './pages/listrooms-page';
 import { CreateRoomPage } from './pages/createroom-page';
 import { EditRoomPage } from './pages/editroom-page';
+import { ListBillsPage } from './pages/listbills-page';
+import { CreateBillsPage } from './pages/createbills-page';
+import { EditBillPage } from './pages/editbill-page';
 
 
 test.describe('Test suite 01', () => {
@@ -88,51 +91,47 @@ test.describe('Test suite 01', () => {
 
   });
 
-  test('Test case 5 - Creating an unpaid bill', async ({ page }) => {
+  test('Test case 5 - Create a new bill with a randomly generated amount', async ({ page }) => {
 
     const loginPage = new LoginPage(page);
-    const billsPage = new BillsPage(page);
+    const listBillsPage = new ListBillsPage(page);
+    const createBillsPage = new CreateBillsPage(page);
 
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    await billsPage.createUnpaidBill();
-
-    await expect(billsPage.createBillButton).toBeVisible();
-    await expect(billsPage.valueTextField).toBeVisible();
-    await expect(billsPage.valueTextField).toBeVisible();
-    await expect(billsPage.paidCheckbox).toBeVisible();
-    await expect(billsPage.saveBillButton).toBeVisible();
-
-    await billsPage.saveBill();
-
-    //bills header
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
+    await listBillsPage.listBills();
+    await createBillsPage.createBill();
+    await createBillsPage.saveBill();
 
   });
 
-  test('Test case 6 - delete room', async ({ page }) => {
+  test('Test case 6 - Edit existing bill', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    const roomsPage = new RoomsPage(page);
+    const listBillsPage = new ListBillsPage(page);
+    const editBillPage = new EditBillPage(page);
 
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    await roomsPage.deleteRoom();
+    await listBillsPage.listBills();
+    await editBillPage.editBill();
+    await editBillPage.saveEditedBill();
 
   });
 
-  test('Test case 7 - update room', async ({ page }) => {
+  test('Test case 7 - Delete existing bill', async ({ page }) => {
     const loginPage = new LoginPage(page);
-    const roomsPage = new RoomsPage(page);
+    const listBillsPage = new ListBillsPage(page);
+    const editBillPage = new EditBillPage(page);
 
     await loginPage.goto();
-
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
-    await roomsPage.updateRoom();
+    await listBillsPage.listBills();
+    await editBillPage.deleteBill();
 
   });
 
