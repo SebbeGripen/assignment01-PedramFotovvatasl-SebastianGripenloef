@@ -9,7 +9,6 @@ const randomPriceAmount = faker.commerce.price({ min: 100, max: 2000, dec: 0 })
 export class CreateRoomPage {
     //Attributes
     readonly page: Page;
-    readonly roomsButton: Locator;
     readonly createRoomButton: Locator;
     readonly categorySelector: Locator;
     readonly numberTextField: Locator;
@@ -23,7 +22,6 @@ export class CreateRoomPage {
     //Constructor
     constructor(page: Page) {
         this.page = page;
-        this.roomsButton = page.locator('div.block:nth-child(1) > a:nth-child(3)');
         this.createRoomButton = page.locator("a.btn:nth-child(2)");
         this.categorySelector = page.locator("div.field:nth-child(1) > select:nth-child(2)");
         this.numberTextField = page.locator("div.field:nth-child(2) > input:nth-child(2)");

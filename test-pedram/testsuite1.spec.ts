@@ -2,8 +2,6 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
-import { RoomsPage } from './pages/rooms-page';
-import { BillsPage } from './pages/bills-page';
 import { ListRoomsPage } from './pages/listrooms-page';
 import { CreateRoomPage } from './pages/createroom-page';
 import { EditRoomPage } from './pages/editroom-page';
@@ -36,7 +34,7 @@ test.describe('Test suite 01', () => {
     await page.waitForTimeout(5000);
   });
 
-  test('Test case 2 - Test creating an available room with randomly generated data', async ({ page }) => {
+  test('Test case 2 - Create an available room with randomly generated data', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const createRoomPage = new CreateRoomPage(page);
@@ -46,23 +44,32 @@ test.describe('Test suite 01', () => {
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
     await listRoomsPage.listRooms();
-    await createRoomPage.createRoom();
-    //expect 'new room' header to be visible
+    //Rooms header visible
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
+    await createRoomPage.createRoom();
+    //New rooms header
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
+
+    await expect(page.locator("div.field:nth-child(1) > select:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(2) > input:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toBeVisible();
+    await expect(page.locator(".checkbox")).toBeVisible();
+    //await expect(page.locator(""))
+    await expect(page.locator("div.field:nth-child(5) > input:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(6) > select:nth-child(2)")).toBeVisible();
+
+    await expect(page.locator("a.btn:nth-child(2)")).toBeEnabled();
+    await expect(page.locator("a.btn:nth-child(2)")).toBeVisible();
+
     await createRoomPage.saveRoom();
-
-
-  
-    //Rooms header visible
-    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();
 
     await page.waitForTimeout(5000);
 
 
   });
 
-  test('Test case 3 - Test editing an existing room', async ({ page }) => {
+  test('Test case 3 - Edit an existing room', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const editRoomPage = new EditRoomPage(page);
@@ -77,7 +84,7 @@ test.describe('Test suite 01', () => {
 
   });
 
-  test('Test case 4 - Test deleting an existing room', async ({ page }) => {
+  test('Test case 4 -  Delete all rooms and assert that the page is empty', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const editRoomPage = new EditRoomPage(page);
@@ -88,6 +95,9 @@ test.describe('Test suite 01', () => {
 
     await listRoomsPage.listRooms();
     await editRoomPage.deleteRoom();
+    await editRoomPage.deleteRoom();
+    //assert that page displays that there are no more rooms
+    await expect(page.locator("div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)")).toBeVisible();
 
   });
 
