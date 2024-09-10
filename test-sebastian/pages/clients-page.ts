@@ -1,46 +1,40 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-
-const fullName = faker.person.fullName();
-const email = faker.internet.email();
-const phoneNumber = faker.phone.number();
 
 export class ClientsPage {
   //Attributes
   readonly page: Page;
   readonly createClientButton: Locator;
-  readonly nameTextField: Locator;
-  readonly emailTextField: Locator;
-  readonly phoneNumber: Locator;
-  readonly saveButton: Locator;
   readonly contextMenu: Locator;
   readonly deleteButton: Locator;
+  readonly editClientButton: Locator;
+  readonly clientsBackButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.createClientButton = page.locator('a.btn:nth-child(2)');
-    this.nameTextField = page.locator('div.field:nth-child(1) > input:nth-child(2)');
-    this.emailTextField = page.locator('div.field:nth-child(2) > input:nth-child(2)');
-    this.phoneNumber = page.locator('div.field:nth-child(3) > input:nth-child(2)');
-    this.saveButton = page.locator('a.btn:nth-child(2)');
     this.contextMenu = page.locator('div.card:nth-child(1) > div:nth-child(3) > img:nth-child(1)');
     this.deleteButton = page.locator('.menu > a:nth-child(2)');
+    this.clientsBackButton = page.locator('a.btn:nth-child(1)');
+    this.editClientButton = page.locator('.menu > a:nth-child(1)');
   }
 
   async perfromCreateClient() {
     await this.createClientButton.click();
-    await this.nameTextField.fill(fullName);
-    await this.emailTextField.fill(email);
-    await this.phoneNumber.fill(phoneNumber);
-  }
-  async saveClient() {
-    await this.saveButton.click();
   }
 
   async deleteClient() {
     await this.contextMenu.click();
     await this.deleteButton.click();
   }
+
+  async editClient() {
+    await this.contextMenu.click();
+    await this.editClientButton.click();
+  }
+
+  async outClients() {
+    await this.clientsBackButton.click();
+}
 
 
 

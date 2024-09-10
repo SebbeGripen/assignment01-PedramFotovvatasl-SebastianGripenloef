@@ -5,13 +5,24 @@ import { DashboardPage } from './pages/dashboard-page';
 import { ClientsPage } from './pages/clients-page';
 import { ReservationsPage } from './pages/reservations-page';
 import { faker } from '@faker-js/faker';
+import { RoomsPage } from './pages/rooms-page';
+import { BillsPage } from './pages/bills-page';
+import { CreateClientsPage } from './pages/createclients-page';
+import { CreateReservationsPage } from './pages/createreservations-page.ts';
+import { EditClientsPage } from './pages/editclients-page.ts';
+
 
 
 
 test.describe('Test suite 02', () => {
-  test('Test case 06', async ({ page }) => {
+  test('Test case 06 testing the dashboard', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
+    const roomsPage = new RoomsPage(page);
+    const clientsPage = new ClientsPage(page);
+    const billsPage = new BillsPage(page);
+    const reservationsPage = new ReservationsPage(page);
+
 
     await loginPage.goto();
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
@@ -20,25 +31,25 @@ test.describe('Test suite 02', () => {
     await expect(dashboardPage.logoutButton).toHaveText('Logout');
     await expect(dashboardPage.logoutButton).toBeVisible();
     await dashboardPage.inRooms();
-    await expect(dashboardPage.roomsBackButton).toBeEnabled();
-    await expect(dashboardPage.roomsBackButton).toHaveText('Back');
-    await expect(dashboardPage.roomsBackButton).toBeVisible();
-    await dashboardPage.outRooms();
+    await expect(roomsPage.roomsBackButton).toBeEnabled();
+    await expect(roomsPage.roomsBackButton).toHaveText('Back');
+    await expect(roomsPage.roomsBackButton).toBeVisible();
+    await roomsPage.outRooms();
     await dashboardPage.inClients();
-    await expect(dashboardPage.clientsBackButton).toBeEnabled();
-    await expect(dashboardPage.clientsBackButton).toHaveText('Back');
-    await expect(dashboardPage.clientsBackButton).toBeVisible();
-    await dashboardPage.outClients();
+    await expect(clientsPage.clientsBackButton).toBeEnabled();
+    await expect(clientsPage.clientsBackButton).toHaveText('Back');
+    await expect(clientsPage.clientsBackButton).toBeVisible();
+    await clientsPage.outClients();
     await dashboardPage.inBills();
-    await expect(dashboardPage.billsBackButton).toBeEnabled();
-    await expect(dashboardPage.billsBackButton).toHaveText('Back');
-    await expect(dashboardPage.billsBackButton).toBeVisible();
-    await dashboardPage.outBills();
+    await expect(billsPage.billsBackButton).toBeEnabled();
+    await expect(billsPage.billsBackButton).toHaveText('Back');
+    await expect(billsPage.billsBackButton).toBeVisible();
+    await billsPage.outBills();
     await dashboardPage.inReservations();
-    await expect(dashboardPage.reservationsBackButton).toBeEnabled();
-    await expect(dashboardPage.reservationsBackButton).toHaveText('Back');
-    await expect(dashboardPage.reservationsBackButton).toBeVisible();
-    await dashboardPage.outReservations();
+    await expect(reservationsPage.reservationsBackButton).toBeEnabled();
+    await expect(reservationsPage.reservationsBackButton).toHaveText('Back');
+    await expect(reservationsPage.reservationsBackButton).toBeVisible();
+    await reservationsPage.outReservations();
     await dashboardPage.performLogout();
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
     await page.waitForTimeout(5000);
@@ -50,6 +61,7 @@ test.describe('Test suite 02', () => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
+    const createClientsPage = new CreateClientsPage(page);
 
     await loginPage.goto();
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
@@ -59,9 +71,9 @@ test.describe('Test suite 02', () => {
     await expect(clientsPage.createClientButton).toHaveText('Create Client');
     await expect(clientsPage.createClientButton).toBeVisible();
     await clientsPage.perfromCreateClient();
-    //await expect (clientsPage.nameTextField)
-    //await expect (clientsPage.emailTextField)
-    //await expect (clientsPage.phoneNumber)
+    await expect(createClientsPage.nameTextField).toBeEditable;
+    await expect (createClientsPage.emailTextField).toBeEditable;
+    await expect (createClientsPage.phoneNumber).toBeEditable;
     await expect(page.getByRole('heading', { name: 'New Client' })).toBeVisible();
     await expect(page.locator('div.field:nth-child(1) > label:nth-child(1)')).toBeVisible(); //To see if this element is visible
     await expect(page.locator('div.field:nth-child(1) > label:nth-child(1)')).toHaveText('Name'); //To see if the word 'Name' is above the name text box
@@ -69,8 +81,8 @@ test.describe('Test suite 02', () => {
     await expect(page.locator('div.field:nth-child(2) > label:nth-child(1)')).toHaveText('Email'); //To see if the word 'Email' is above the email text box
     await expect(page.locator('div.field:nth-child(3) > label:nth-child(1)')).toBeVisible(); //To see if this element is visible
     await expect(page.locator('div.field:nth-child(3) > label:nth-child(1)')).toHaveText('Telephone') //To see if the word 'Telephone' is above the telephone text box
-    await clientsPage.saveClient();
-    await dashboardPage.outClients();
+    await createClientsPage.saveClient();
+    await clientsPage.outClients();
     await page.waitForTimeout(5000);
 
 
@@ -82,6 +94,7 @@ test.describe('Test suite 02', () => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const reservationsPage = new ReservationsPage(page);
+    const createReservationsPage = new CreateReservationsPage(page);
 
     await loginPage.goto();
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
@@ -91,7 +104,13 @@ test.describe('Test suite 02', () => {
     await expect(reservationsPage.createReservationButton).toHaveText('Create Reservation');
     await expect(reservationsPage.createReservationButton).toBeVisible();
     await reservationsPage.perfomCreateReservation();
-    await reservationsPage.perfromSaveReservation();
+    await createReservationsPage.perfomFillReservation();
+    await expect(createReservationsPage.startDateTextField).toBeEditable;
+    await expect(createReservationsPage.endDateTextField).toBeEditable;
+    await expect(createReservationsPage.selectClient).toBeEnabled;
+    await expect(createReservationsPage.selectRoom).toBeEnabled;
+    await expect(createReservationsPage.selectBill).toBeEnabled;
+    await createReservationsPage.perfromSaveReservation();
     // make a test that checks that the reservation was saved.
     await page.waitForTimeout(5000);
 
@@ -100,7 +119,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 09 remove a client', async ({ page }) => {
+  test('Test case 09 delete a client', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
@@ -118,7 +137,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 10 remove a reservation', async ({ page }) => {
+  test('Test case 10 delete a reservation', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const reservationsPage = new ReservationsPage(page);
@@ -128,6 +147,26 @@ test.describe('Test suite 02', () => {
     await dashboardPage.inReservations();
     await reservationsPage.deleteReservation();
     await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no reservations');
+    await page.waitForTimeout(5000);
+
+
+
+  });
+});
+
+test.describe('Test suite 02', () => {
+  test('Test case 12 edit a client', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    const dashboardPage = new DashboardPage(page);
+    const clientsPage = new ClientsPage(page);
+    const editClientsPage = new EditClientsPage(page);
+
+    await loginPage.goto();
+    await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
+    await dashboardPage.inClients();
+    await clientsPage.editClient();
+    await editClientsPage.perfromFillClient();
+    await editClientsPage.saveEditClient();
     await page.waitForTimeout(5000);
 
 
