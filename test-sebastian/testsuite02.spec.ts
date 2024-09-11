@@ -11,12 +11,13 @@ import { CreateClientsPage } from './pages/createclients-page';
 import { CreateReservationsPage } from './pages/createreservations-page.ts';
 import { EditClientsPage } from './pages/editclients-page.ts';
 import { EditReservationsPage } from './pages/editreservations-page.ts';
+import { create } from 'domain';
 
 
 
 
 test.describe('Test suite 02', () => {
-  test('Test case 06 testing the dashboard', async ({ page }) => {
+  test('Test case 01 testing the dashboard', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const roomsPage = new RoomsPage(page);
@@ -58,7 +59,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 07 create a client and save it', async ({ page }) => {
+  test('Test case 02 create a client and save it', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
@@ -72,6 +73,7 @@ test.describe('Test suite 02', () => {
     await expect(clientsPage.createClientButton).toHaveText('Create Client');
     await expect(clientsPage.createClientButton).toBeVisible();
     await clientsPage.perfromCreateClient();
+    await createClientsPage.perfromFillClient();
     await expect(createClientsPage.nameTextField).toBeEditable;
     await expect (createClientsPage.emailTextField).toBeEditable;
     await expect (createClientsPage.phoneNumber).toBeEditable;
@@ -83,6 +85,7 @@ test.describe('Test suite 02', () => {
     await expect(page.locator('div.field:nth-child(3) > label:nth-child(1)')).toBeVisible(); //To see if this element is visible
     await expect(page.locator('div.field:nth-child(3) > label:nth-child(1)')).toHaveText('Telephone') //To see if the word 'Telephone' is above the telephone text box
     await createClientsPage.saveClient();
+    await expect(page.locator('div.card:nth-child(3)')).toBeVisible();
     await clientsPage.outClients();
     await page.waitForTimeout(5000);
 
@@ -91,7 +94,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 08 create a reservation and save it', async ({ page }) => {
+  test('Test case 03 create a reservation and save it', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const reservationsPage = new ReservationsPage(page);
@@ -112,7 +115,8 @@ test.describe('Test suite 02', () => {
     await expect(createReservationsPage.selectRoom).toBeEnabled;
     await expect(createReservationsPage.selectBill).toBeEnabled;
     await createReservationsPage.perfromSaveReservation();
-    // make a test that checks that the reservation was saved.
+    await expect(page.locator('div.card:nth-child(2)')).toBeVisible();
+    await reservationsPage.outReservations();
     await page.waitForTimeout(5000);
 
 
@@ -120,7 +124,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 09 delete a client', async ({ page }) => {
+  test('Test case 04 delete a client', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
@@ -131,6 +135,7 @@ test.describe('Test suite 02', () => {
     await clientsPage.deleteClient();
     await clientsPage.deleteClient();
     await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no clients')
+    await clientsPage.outClients();
     await page.waitForTimeout(5000);
 
 
@@ -138,7 +143,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 10 delete a reservation', async ({ page }) => {
+  test('Test case 05 delete a reservation', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const reservationsPage = new ReservationsPage(page);
@@ -148,6 +153,7 @@ test.describe('Test suite 02', () => {
     await dashboardPage.inReservations();
     await reservationsPage.deleteReservation();
     await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no reservations');
+    await reservationsPage.outReservations();
     await page.waitForTimeout(5000);
 
 
@@ -156,7 +162,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 11 edit a client', async ({ page }) => {
+  test('Test case 06 edit a client', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const clientsPage = new ClientsPage(page);
@@ -166,10 +172,12 @@ test.describe('Test suite 02', () => {
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
     await dashboardPage.inClients();
     await clientsPage.editClient();
+    await expect(page.getByRole('heading', { name: 'Tester Hotel' })).toBeVisible();
     await editClientsPage.perfromFillClient();
     await editClientsPage.saveEditClient();
+    await expect(page.locator('div.card:nth-child(1)')).not.toHaveText('Jonas Hellman (#1)');
+    await clientsPage.outClients();
     await page.waitForTimeout(5000);
-    // test if it's false
 
 
 
@@ -177,7 +185,7 @@ test.describe('Test suite 02', () => {
 });
 
 test.describe('Test suite 02', () => {
-  test('Test case 12 edit a reservation', async ({ page }) => {
+  test('Test case 07 edit a reservation', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
     const reservationsPage = new ReservationsPage(page);
@@ -186,12 +194,13 @@ test.describe('Test suite 02', () => {
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
     await dashboardPage.inReservations();
     await reservationsPage.editReservation();
+    await expect(page.getByRole('heading', { name: 'Tester Hotel' })).toBeVisible();
     await editReservationsPage.perfomFillReservation();
     await editReservationsPage.perfromSaveReservation();
+    await expect(page.locator('.card > h3:nth-child(1)')).not.toHaveText('Jonas Hellman: 2020-04-01 - 2020-04-04');
+    await reservationsPage.outReservations();
     await page.waitForTimeout(5000);
-    // test that the new client is here.
-
-
+    // test that the edited reservation is here.
 
   });
 });

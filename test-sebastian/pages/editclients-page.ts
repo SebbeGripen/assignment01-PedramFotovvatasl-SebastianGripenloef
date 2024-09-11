@@ -23,9 +23,9 @@ export class EditClientsPage {
   }
 
   async perfromFillClient() {
-    await this.nameTextField.Fill(fullName);
-    await this.emailTextField.Fill(email);
-    await this.telephoneTextField.Fill(phoneNumber);
+    await this.nameTextField.fill(fullName);
+    await this.emailTextField.fill(email);
+    await this.telephoneTextField.fill(phoneNumber);
  }
 
  async saveEditClient() {
