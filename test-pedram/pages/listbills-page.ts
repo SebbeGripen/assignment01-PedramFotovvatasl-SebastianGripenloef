@@ -4,6 +4,7 @@ export class ListBillsPage {
     //Attributes
     readonly page: Page;
     readonly billsButton: Locator;
+    readonly billsBackButton: Locator;
 
     //Constructor
     constructor(page: Page) {
@@ -15,6 +16,11 @@ export class ListBillsPage {
     // Methods / functions
     async listBills() {
         await this.billsButton.click();
+
+    }
+
+    async backoutBills() {
+        await this.billsBackButton.click();
 
     }
 

@@ -10,7 +10,6 @@ export class EditRoomPage {
     readonly page: Page;
     readonly roomsButton: Locator;
     readonly editCategoryField: Locator;
-
     readonly editNumberField: Locator;
     readonly editFloorField: Locator;
     readonly availableCheckbox: Locator;

@@ -18,7 +18,6 @@ export class CreateRoomPage {
     readonly saveRoomButton: Locator;
     readonly featureSelect: Locator;
 
-
     //Constructor
     constructor(page: Page) {
         this.page = page;

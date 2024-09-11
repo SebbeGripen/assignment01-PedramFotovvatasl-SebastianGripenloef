@@ -1,4 +1,3 @@
-
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ListRoomsPage {
@@ -29,6 +28,11 @@ export class ListRoomsPage {
     // Methods / functions
     async listRooms() {
         await this.roomsButton.click();
+
+    }
+
+    async backoutRooms() {
+        await this.roomsBackButton.click();
 
     }
 
