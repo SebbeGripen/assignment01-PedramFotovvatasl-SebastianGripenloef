@@ -6,7 +6,7 @@ const email = faker.internet.email();
 const phoneNumber = faker.phone.number();
 
 export class EditClientsPage {
-  //Attributes
+
   readonly page: Page;
   readonly nameTextField;
   readonly emailTextField;
@@ -26,11 +26,11 @@ export class EditClientsPage {
     await this.nameTextField.fill(fullName);
     await this.emailTextField.fill(email);
     await this.telephoneTextField.fill(phoneNumber);
- }
+  }
 
- async saveEditClient() {
+  async saveEditClient() {
     await this.saveButton.click();
- }
+  }
 
 
 }

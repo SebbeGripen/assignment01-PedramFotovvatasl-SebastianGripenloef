@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 
 const dateStart = faker.date.between({ from: '2025-01-01', to: '2025-02-01' });
 const dateEnd = faker.date.between({ from: '2025-02-02', to: '2025-03-01' });
+
 // Convert dates to string format (YYYY-MM-DD)
 const formattedDateStart = dateStart.toISOString().split('T')[0];
 const formattedDateEnd = dateEnd.toISOString().split('T')[0];
@@ -26,7 +27,8 @@ export class CreateReservationsPage {
         this.selectClient = page.locator('div.field:nth-child(3) > select:nth-child(2)');
         this.selectRoom = page.locator('div.field:nth-child(4) > select:nth-child(2)');
         this.selectBill = page.locator('div.field:nth-child(5) > select:nth-child(2)');
-        this.selectSaveReservation = page.locator('a.btn:nth-child(2)');    }
+        this.selectSaveReservation = page.locator('a.btn:nth-child(2)');
+    }
 
     async perfomFillReservation() {
         await this.startDateTextField.fill(formattedDateStart);

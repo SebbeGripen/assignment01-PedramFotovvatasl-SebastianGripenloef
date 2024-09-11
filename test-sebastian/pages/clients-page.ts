@@ -1,7 +1,7 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ClientsPage {
-  //Attributes
+
   readonly page: Page;
   readonly createClientButton: Locator;
   readonly contextMenu: Locator;
@@ -34,7 +34,7 @@ export class ClientsPage {
 
   async outClients() {
     await this.clientsBackButton.click();
-}
+  }
 
 
 

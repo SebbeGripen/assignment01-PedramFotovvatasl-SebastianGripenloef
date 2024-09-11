@@ -1,18 +1,15 @@
-//testsuite01.ts
+
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
 import { ClientsPage } from './pages/clients-page';
 import { ReservationsPage } from './pages/reservations-page';
-import { faker } from '@faker-js/faker';
 import { RoomsPage } from './pages/rooms-page';
 import { BillsPage } from './pages/bills-page';
 import { CreateClientsPage } from './pages/createclients-page';
 import { CreateReservationsPage } from './pages/createreservations-page.ts';
 import { EditClientsPage } from './pages/editclients-page.ts';
 import { EditReservationsPage } from './pages/editreservations-page.ts';
-import { create } from 'domain';
-
 
 
 
@@ -75,8 +72,8 @@ test.describe('Test suite 02', () => {
     await clientsPage.perfromCreateClient();
     await createClientsPage.perfromFillClient();
     await expect(createClientsPage.nameTextField).toBeEditable;
-    await expect (createClientsPage.emailTextField).toBeEditable;
-    await expect (createClientsPage.phoneNumber).toBeEditable;
+    await expect(createClientsPage.emailTextField).toBeEditable;
+    await expect(createClientsPage.phoneNumber).toBeEditable;
     await expect(page.getByRole('heading', { name: 'New Client' })).toBeVisible();
     await expect(page.locator('div.field:nth-child(1) > label:nth-child(1)')).toBeVisible(); //To see if this element is visible
     await expect(page.locator('div.field:nth-child(1) > label:nth-child(1)')).toHaveText('Name'); //To see if the word 'Name' is above the name text box
@@ -197,10 +194,9 @@ test.describe('Test suite 02', () => {
     await expect(page.getByRole('heading', { name: 'Tester Hotel' })).toBeVisible();
     await editReservationsPage.perfomFillReservation();
     await editReservationsPage.perfromSaveReservation();
-    await expect(page.locator('.card > h3:nth-child(1)')).not.toHaveText('Jonas Hellman: 2020-04-01 - 2020-04-04');
+    await expect(page.locator('.card > h3:nth-child(1)')).not.toContainText('Jonas Hellman');
     await reservationsPage.outReservations();
     await page.waitForTimeout(5000);
-    // test that the edited reservation is here.
 
   });
 });

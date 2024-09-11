@@ -13,5 +13,5 @@ export class BillsPage {
 
     async outBills() {
         await this.billsBackButton.click();
-      }
+    }
 }

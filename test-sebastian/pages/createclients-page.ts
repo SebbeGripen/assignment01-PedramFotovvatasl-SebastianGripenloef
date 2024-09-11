@@ -6,7 +6,7 @@ const email = faker.internet.email();
 const phoneNumber = faker.phone.number();
 
 export class CreateClientsPage {
-  //Attributes
+
   readonly page: Page;
   readonly nameTextField: Locator;
   readonly emailTextField: Locator;
