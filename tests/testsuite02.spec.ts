@@ -1,12 +1,12 @@
 
 import { test, expect } from '@playwright/test';
-import { LoginPage } from './pages/login-page';
-import { DashboardPage } from './pages/dashboard-page';
-import { ClientsPage } from './pages/clients-page';
-import { ReservationsPage } from './pages/reservations-page';
-import { RoomsPage } from './pages/rooms-page';
-import { BillsPage } from './pages/bills-page';
-import { CreateClientsPage } from './pages/createclients-page';
+import { LoginPage } from './pages/login-page.ts';
+import { DashboardPage } from './pages/dashboard-page.ts';
+import { ClientsPage } from './pages/clients-page.ts';
+import { ReservationsPage } from './pages/reservations-page.ts';
+import { RoomsPage } from './pages/rooms-page.ts';
+import { BillsPage } from './pages/bills-page.ts';
+import { CreateClientsPage } from './pages/createclients-page.ts';
 import { CreateReservationsPage } from './pages/createreservations-page.ts';
 import { EditClientsPage } from './pages/editclients-page.ts';
 import { EditReservationsPage } from './pages/editreservations-page.ts';
