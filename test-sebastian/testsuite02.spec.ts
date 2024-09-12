@@ -51,7 +51,6 @@ test.describe('Test suite 02', () => {
     await reservationsPage.outReservations();
     await dashboardPage.performLogout();
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
-    await page.waitForTimeout(5000);
   });
 });
 
@@ -84,7 +83,7 @@ test.describe('Test suite 02', () => {
     await createClientsPage.saveClient();
     await expect(page.locator('div.card:nth-child(3)')).toBeVisible();
     await clientsPage.outClients();
-    await page.waitForTimeout(5000);
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
 
   });
@@ -114,7 +113,7 @@ test.describe('Test suite 02', () => {
     await createReservationsPage.perfromSaveReservation();
     await expect(page.locator('div.card:nth-child(2)')).toBeVisible();
     await reservationsPage.outReservations();
-    await page.waitForTimeout(5000);
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
 
   });
@@ -133,7 +132,7 @@ test.describe('Test suite 02', () => {
     await clientsPage.deleteClient();
     await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no clients')
     await clientsPage.outClients();
-    await page.waitForTimeout(5000);
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
 
   });
@@ -151,7 +150,7 @@ test.describe('Test suite 02', () => {
     await reservationsPage.deleteReservation();
     await expect(page.locator('div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)')).toHaveText('There are no reservations');
     await reservationsPage.outReservations();
-    await page.waitForTimeout(5000);
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
 
 
@@ -174,7 +173,7 @@ test.describe('Test suite 02', () => {
     await editClientsPage.saveEditClient();
     await expect(page.locator('div.card:nth-child(1)')).not.toHaveText('Jonas Hellman (#1)');
     await clientsPage.outClients();
-    await page.waitForTimeout(5000);
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
 
 
@@ -196,7 +195,7 @@ test.describe('Test suite 02', () => {
     await editReservationsPage.perfromSaveReservation();
     await expect(page.locator('.card > h3:nth-child(1)')).not.toContainText('Jonas Hellman');
     await reservationsPage.outReservations();
-    await page.waitForTimeout(5000);
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
   });
 });
