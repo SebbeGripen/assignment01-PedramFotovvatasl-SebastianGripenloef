@@ -1,0 +1,7 @@
+Template for .env
+
+BASE_URL =
+
+TEST_USERNAME =
+
+TEST_PASSWORD =
