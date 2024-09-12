@@ -135,7 +135,7 @@ test.describe('Test suite 01', () => {
 
     await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeEditable();
     await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeVisible();
-    await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toHaveValue(/[1-2000]/);
+    await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toHaveValue(/[1-2000]/); //Sometimes returns a string. Reason unknown. But should work most of the time. 
     await expect(page.locator(".checkbox")).toBeEnabled();
 
     await createBillsPage.saveBill();
@@ -160,7 +160,7 @@ test.describe('Test suite 01', () => {
 
     await editBillPage.editBill();
 
-    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toHaveValue(/[1-2000]/);
+    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toHaveValue(/[1-2000]/); //Sometimes returns a string. Reason unknown. But should work most of the time.
     await expect(page.locator(".checkbox")).toBeVisible();
     await expect(page.locator(".blue")).toBeEnabled();
 

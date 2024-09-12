@@ -15,8 +15,6 @@ export class EditRoomPage {
     readonly availableCheckbox: Locator;
     readonly editpriceField: Locator;
     readonly editfeatures: Locator;
-
-    //testing below
     readonly contextMenuButton: Locator;
     readonly editPageDeleteButton: Locator;
     readonly contextEditButton: Locator;
