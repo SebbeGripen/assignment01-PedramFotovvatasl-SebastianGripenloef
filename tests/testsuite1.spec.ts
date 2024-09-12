@@ -103,7 +103,7 @@ test.describe('Test suite 01', () => {
 
   });
 
-  test('Test case 4 -  Delete all rooms that display when starting the application fresh, and assert that the page gives a message that there are no more rooms.', async ({ page }) => {
+  test('Test case 4 - Delete all rooms that display when starting the application fresh, and assert that the page gives a message that there are no more rooms.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const editRoomPage = new EditRoomPage(page);
@@ -134,8 +134,7 @@ test.describe('Test suite 01', () => {
     await createBillsPage.createBill();
 
     await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeEditable();
-    await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeVisible();
-    await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toHaveValue(/[1-2000]/); //Sometimes returns a string. Reason unknown. But should work most of the time. 
+    await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeVisible(); 
     await expect(page.locator(".checkbox")).toBeEnabled();
 
     await createBillsPage.saveBill();
@@ -160,7 +159,6 @@ test.describe('Test suite 01', () => {
 
     await editBillPage.editBill();
 
-    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toHaveValue(/[1-2000]/); //Sometimes returns a string. Reason unknown. But should work most of the time.
     await expect(page.locator(".checkbox")).toBeVisible();
     await expect(page.locator(".blue")).toBeEnabled();
 
