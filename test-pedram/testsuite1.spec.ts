@@ -29,16 +29,17 @@ test.describe('Test suite 01', () => {
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
     await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
+
     await dashboardPage.performLogout();
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
-    await page.waitForTimeout(5000);
+
   });
 
-  test('Test case 2 - Create an available room with randomly generated data, and assert that relevant fields are visible', async ({ page }) => {
+  test('Test case 2 - Create an available room with randomly generated data, and assert relevant fields so that they are visible and editable, then save the room and back out of the rooms section.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const createRoomPage = new CreateRoomPage(page);
-    
+
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
@@ -50,16 +51,18 @@ test.describe('Test suite 01', () => {
     await createRoomPage.createRoom();
     //New rooms header
     await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
-    
-    await expect(page.locator("div.field:nth-child(1) > select:nth-child(2)")).toBeVisible();
-    await expect(page.locator("div.field:nth-child(2) > input:nth-child(2)")).toBeVisible();
-    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toBeVisible();
-    await expect(page.locator(".checkbox")).toBeVisible();
-    //await expect(page.locator(""))
-    await expect(page.locator("div.field:nth-child(5) > input:nth-child(2)")).toBeVisible();
-    
-    await expect(page.locator("div.field:nth-child(6) > select:nth-child(2)")).toBeVisible();
 
+    await expect(page.locator("div.field:nth-child(1) > select:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(1) > select:nth-child(2)")).toBeEditable();
+    await expect(page.locator("div.field:nth-child(2) > input:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(2) > input:nth-child(2)")).toBeEditable();
+    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toBeEditable();
+    await expect(page.locator(".checkbox")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(5) > input:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(5) > input:nth-child(2)")).toBeEditable();
+    await expect(page.locator("div.field:nth-child(6) > select:nth-child(2)")).toBeVisible();
+    await expect(page.locator("div.field:nth-child(6) > select:nth-child(2)")).toBeEditable();
     await expect(page.locator("a.btn:nth-child(2)")).toBeEnabled();
     await expect(page.locator("a.btn:nth-child(2)")).toBeVisible();
 
@@ -67,8 +70,7 @@ test.describe('Test suite 01', () => {
 
     await listRoomsPage.backoutRooms();
 
-    await page.waitForTimeout(5000);
-
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1)")).toBeVisible();
 
   });
 
@@ -76,16 +78,16 @@ test.describe('Test suite 01', () => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const editRoomPage = new EditRoomPage(page);
-    
+
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
     await listRoomsPage.listRooms();
     await editRoomPage.editRoom();
+
     await expect(page.locator("div.field:nth-child(3) > select:nth-child(2)")).toBeVisible();
     await expect(page.locator("div.field:nth-child(3) > select:nth-child(2)")).not.toBeEmpty();
-    //await expect(page.locator(""))
     await expect(page.locator("div.field:nth-child(5) > input:nth-child(2)")).toBeVisible();
     await expect(page.locator("div.field:nth-child(5) > input:nth-child(2)")).not.toBeEmpty();
     await expect(page.locator(".checkbox")).toBeEnabled();
@@ -93,16 +95,19 @@ test.describe('Test suite 01', () => {
     await expect(page.locator("div.field:nth-child(7) > input:nth-child(2)")).not.toBeEmpty();
     await expect(page.locator("div.field:nth-child(8) > select:nth-child(2)")).toBeVisible();
     await expect(page.locator("div.field:nth-child(4) > input:nth-child(2)")).toBeVisible();
-    await expect(page.locator("div.field:nth-child(4) > input:nth-child(2)")).not.toBeEmpty
+    await expect(page.locator("div.field:nth-child(4) > input:nth-child(2)")).not.toBeEmpty();
+
     await editRoomPage.saveEditRoom();
+
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
   });
 
-  test('Test case 4 -  Delete all rooms and assert that the page gives a message that there are no more rooms', async ({ page }) => {
+  test('Test case 4 -  Delete all rooms that display when starting the application fresh, and assert that the page gives a message that there are no more rooms.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const editRoomPage = new EditRoomPage(page);
-    
+
     await loginPage.goto();
 
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
@@ -110,7 +115,7 @@ test.describe('Test suite 01', () => {
     await listRoomsPage.listRooms();
     await editRoomPage.deleteRoom();
     await editRoomPage.deleteRoom();
-  
+
     await expect(page.locator("div.container:nth-child(2) > div:nth-child(3) > p:nth-child(1)")).toBeVisible();
 
   });
@@ -127,16 +132,19 @@ test.describe('Test suite 01', () => {
 
     await listBillsPage.listBills();
     await createBillsPage.createBill();
-    
+
     await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeEditable();
     await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toBeVisible();
     await expect(page.locator("div.field:nth-child(1) > input:nth-child(2)")).toHaveValue(/[1-2000]/);
     await expect(page.locator(".checkbox")).toBeEnabled();
+
     await createBillsPage.saveBill();
+
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
   });
 
-  test('Test case 6 - Edit existing bill', async ({ page }) => {
+  test('Test case 6 - Edit an existing bill and assert that the new value is within 1-2000kr, then delete a bill.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listBillsPage = new ListBillsPage(page);
     const editBillPage = new EditBillPage(page);
@@ -146,32 +154,41 @@ test.describe('Test suite 01', () => {
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
     await listBillsPage.listBills();
+
     await expect(page.locator("div.card:nth-child(1) > div:nth-child(4) > img:nth-child(1)")).toBeEnabled();
     await expect(page.locator(".menu > a:nth-child(1)")).toBeHidden();
 
     await editBillPage.editBill();
-    
+
     await expect(page.locator("div.field:nth-child(3) > input:nth-child(2)")).toHaveValue(/[1-2000]/);
     await expect(page.locator(".checkbox")).toBeVisible();
     await expect(page.locator(".blue")).toBeEnabled();
+
     await editBillPage.saveEditedBill();
+    await editBillPage.deleteBill();
+
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
   });
 
-  test('Test case 7 - Delete existing bill', async ({ page }) => {
+  test('Test case 7 - From a fresh start, delete an existing bill and assert that the page displays that there are no more bills, then create a new bill.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listBillsPage = new ListBillsPage(page);
     const editBillPage = new EditBillPage(page);
+    const createBillsPage = new CreateBillsPage(page);
 
     await loginPage.goto();
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
 
     await listBillsPage.listBills();
     await editBillPage.deleteBill();
+    await expect(page.locator("div.container:nth-child(2) > div:nth-child(3)")).toBeVisible();
+
+    await createBillsPage.createBill();
+    await createBillsPage.saveBill();
+
+    await expect(page.locator("div.container:nth-child(2) > h2:nth-child(1) > div:nth-child(1)")).toBeVisible();
 
   });
-
-
-
 
 });

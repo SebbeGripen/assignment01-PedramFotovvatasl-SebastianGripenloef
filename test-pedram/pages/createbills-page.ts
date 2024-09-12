@@ -20,7 +20,7 @@ export class CreateBillsPage {
         this.createBillButton = page.locator("a.btn:nth-child(2)");
         this.valueTextField = page.locator("div.field:nth-child(1) > input:nth-child(2)");
         this.paidCheckbox = page.locator(".checkbox");
-        this.saveBillButton = page.locator("a.btn:nth-child(2)"); 
+        this.saveBillButton = page.locator("a.btn:nth-child(2)");
     }
 
     // Methods / functions
