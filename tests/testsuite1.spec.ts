@@ -120,7 +120,7 @@ test.describe('Test suite 01', () => {
 
   });
 
-  test('Test case 5 - Create a new bill with a randomly generated amount and assert that the value is between 1-2000kr', async ({ page }) => {
+  test('Test case 5 - Create a new bill with a randomly generated amount and assert that the value field is visible and editable.', async ({ page }) => {
 
     const loginPage = new LoginPage(page);
     const listBillsPage = new ListBillsPage(page);
@@ -143,7 +143,7 @@ test.describe('Test suite 01', () => {
 
   });
 
-  test('Test case 6 - Edit an existing bill and assert that the new value is within 1-2000kr, then delete a bill.', async ({ page }) => {
+  test('Test case 6 - Edit an existing bill, then delete a bill.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listBillsPage = new ListBillsPage(page);
     const editBillPage = new EditBillPage(page);
