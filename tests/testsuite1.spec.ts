@@ -121,7 +121,7 @@ test.describe('Test suite 01', () => {
 
   });
 
-  test('Test case 4 - Delete all rooms that display when the application is freshly booted, and assert that the page gives a message that there are no more rooms.', async ({ page }) => {
+  test('Test case 4 - Delete all rooms that display when starting the application fresh, and assert that the page gives a message that there are no more rooms.', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const listRoomsPage = new ListRoomsPage(page);
     const editRoomPage = new EditRoomPage(page);
