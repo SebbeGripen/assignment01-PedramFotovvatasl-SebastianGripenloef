@@ -8,8 +8,26 @@ import { EditRoomPage } from './pages/editroom-page';
 import { ListBillsPage } from './pages/listbills-page';
 import { CreateBillsPage } from './pages/createbills-page';
 import { EditBillPage } from './pages/editbill-page';
+import { execSync } from 'child_process';
 
+//Restarts docker container after each test to reset contents of application.
+function restartDocker(containerName) {
+  try {
+    execSync(`docker stop ${containerName}`);
+    execSync(`docker start ${containerName}`);
+  } catch (error) {
+    console.error('Error restarting Docker container:', error.message);
+    throw error;
+  }
+}
 
+const containerName = ''; //Enter your own container name here from docker.
+
+test.afterEach(() => {
+  restartDocker(containerName);
+});
+
+//Note: Docker container must be started before running the tests, tests must be ran one at a time.
 test.describe('Test suite 01', () => {
   test('Test case 1 - Test logging into the application by automatically retrieving username and password from .env, assert that login fields are visible and editable, and that login button is enabled and visible. Also assert that the user sees dashboard after login, then logout.', async ({ page }) => {
     const loginPage = new LoginPage(page);

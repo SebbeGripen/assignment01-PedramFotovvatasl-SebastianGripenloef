@@ -8,8 +8,25 @@ import { CreateClientsPage } from './pages/createclients-page';
 import { CreateReservationsPage } from './pages/createreservations-page.ts';
 import { EditClientsPage } from './pages/editclients-page.ts';
 import { EditReservationsPage } from './pages/editreservations-page.ts';
+import { execSync } from 'child_process';
 
+/// You have to start docker first and then run the tests. You can only run 1 test a time. You also have to change containerName to your Docker container name.
 
+function restartDocker(containerName) {
+  try {
+    execSync(`docker stop ${containerName}`);
+    execSync(`docker start ${containerName}`);
+  } catch (error) {
+    console.error('Error restarting Docker container:', error.message);
+    throw error;
+  }
+}
+
+const containerName = ''; /// Write your container name here.
+
+test.afterEach(() => {
+  restartDocker(containerName);
+});
 
 test.describe('Test suite 02', () => {
   test('Test case 01 testing the dashboard', async ({ page }) => {
@@ -179,6 +196,7 @@ test.describe('Test suite 02', () => {
     const dashboardPage = new DashboardPage(page);
     const reservationsPage = new ReservationsPage(page);
     const editReservationsPage = new EditReservationsPage(page);
+
     await loginPage.goto();
     await loginPage.performLogin(`${process.env.TEST_USERNAME}`, `${process.env.TEST_PASSWORD}`)
     await dashboardPage.inReservations();
